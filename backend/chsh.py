@@ -59,6 +59,7 @@ def simulate_chsh_game(numberOfTimes):
         totalScoreClassical += chsh_game(classical_strategy)
     
     return {
+        "attempts": numberOfTimes,
         "totalScoreQuantum": totalScoreQuantum,
         "quantumWinningPercentage": totalScoreQuantum/numberOfTimes,
         "totalScoreClassical": totalScoreClassical,

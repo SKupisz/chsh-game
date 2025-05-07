@@ -1,0 +1,15 @@
+.gridWrapper {
+    width: calc(100vw - 20px);
+    padding: 10px;
+    padding-top: 80px;
+    margin-left: 0vw;
+}
+
+@media screen and (min-width: 768px) {
+    .gridWrapper {
+        width: calc(80vw - 20px);
+        padding: 10px;
+        padding-top: 80px;
+        margin-left: 10vw;
+    }
+}
