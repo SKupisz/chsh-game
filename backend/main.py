@@ -2,7 +2,7 @@ from fastapi import FastAPI, Path, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from numpy import random
-from chsh import simulate_chsh_game, chsh_game
+from chsh import simulate_chsh_game, chsh_game, quantum_strategy
 
 app = FastAPI()
 
@@ -17,6 +17,8 @@ app.add_middleware(
 class GameData(BaseModel):
     x: int
     y: int
+
+class ClassicalGameData(GameData):
     a: int
 
 @app.get('/simulate/{numOfSimulations}')
@@ -33,7 +35,7 @@ def initializeTheGame():
     }
 
 @app.post('/game/play_classical')
-async def playClassicalStrategy(data: GameData):
+async def playClassicalStrategy(data: ClassicalGameData):
     def classical_strategy(x,y):
         if y == 0:
             b = 1
@@ -42,4 +44,10 @@ async def playClassicalStrategy(data: GameData):
         return data.a,b
     return {
         "result": chsh_game(classical_strategy, data.x, data.y)
+    }
+
+@app.post('/game/play_quantum')
+async def playQuantumStrategy(data: GameData):
+    return {
+        "result": chsh_game(quantum_strategy, data.x, data.y)
     }

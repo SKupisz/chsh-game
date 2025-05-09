@@ -13,6 +13,10 @@ type GameData = {
 
 type UserAnswer = -1 | 0 | 1;
 
+type Result = {
+    result: number
+}
+
 export const GameWrapper = () => {
 
     const [phase, setPhase] = useState<'begin' | 'answer' | 'victory' | 'defeat'>('begin');
@@ -46,11 +50,28 @@ export const GameWrapper = () => {
                     'Content-Type': 'application/json',
                 }
             });
-            const data = res.data as {result: number};
+            const data = res.data as Result;
             setPhase(data.result === 0 ? 'defeat' : 'victory');
         } catch {
             setError('Failed to play the classical strategy');
             setUserAnswer(-1);
+        }
+    }
+
+    const handleQuantumPlay = async() => {
+        try {
+            setError('');
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/game/play_quantum`, {
+                ...gameData
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = res.data as Result;
+            setPhase(data.result === 0 ? 'defeat' : 'victory');
+        } catch {
+            setError('Failed to play the quantum strategy');
         }
     }
 
@@ -108,6 +129,14 @@ export const GameWrapper = () => {
                                 Quantum strategy
                             </Typography>
                             <Divider />
+                            <Typography align="center" fontSize={20} paddingTop={3} paddingBottom={4}>
+                                Strategy: {gameData?.x === 0 ? 'M' : 'Apply the unitary gate, m'}easure and send
+                            </Typography>
+                            <Button variant="contained" onClick={handleQuantumPlay}>
+                                <Typography fontSize={28} padding={10}>
+                                    Play
+                                </Typography>
+                            </Button>
                         </Stack>
                     </Grid>
                 </Grid>
