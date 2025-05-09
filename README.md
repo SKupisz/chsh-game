@@ -23,3 +23,9 @@ With the use of a classical strategy, players have around `75%` chances of winni
 9. Create an ENV file, where you'll place the variable indicating your backend's API URL (in case of running it locally, NEXT_PUBLIC_BACKEND_API=http://localhost:8000)
 10. Run `npm run dev`
 11. Go to `http://localhost:3000`
+
+**Navigation around the project**
+
+Below all of the subpages implemented are listed with their purposes
+- `/simulation` - simulating the CHSH game X times, where X is given through the input
+- `/game` - the game board where you can play with both classical and quantum strategy
