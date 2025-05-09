@@ -1,8 +1,9 @@
 'use client'
 
 import styles from './SimulationComponent.module.css'
-import { Button, CircularProgress, Grid, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Alert, Button, CircularProgress, Grid, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
 import { BarChart } from '@mui/x-charts/BarChart';
+import FeedbackIcon from '@mui/icons-material/Feedback';
 import axios from 'axios';
 import { ChangeEvent, useState } from "react";
 
@@ -32,7 +33,7 @@ export const SimulationWrapper = () => {
         try {
             setStatus('loading');
             setResult(null);
-            const res = await axios.get(`http://localhost:8000/simulate/${trialNumbers}`);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API}/simulate/${trialNumbers}`);
             const data = res.data as Result;
             setResult(data);
             setStatus('neutral');
@@ -110,6 +111,11 @@ export const SimulationWrapper = () => {
                     
                 />
                 
+            }
+            {
+                status === 'error' && <Alert icon={<FeedbackIcon />} severity="error">
+                    Cannot load the data. Try later
+                </Alert>
             }
         </div>
     )

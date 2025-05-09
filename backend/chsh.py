@@ -1,8 +1,12 @@
 from numpy import random, pi
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
-def chsh_game(strategy):
-    x,y = random.randint(0,2), random.randint(0,2)
+def chsh_game(strategy, x = -1, y = -1):
+
+    if x == -1:
+        x = random.randint(0,2)
+    if y == -1:
+        y = random.randint(0,2)
 
     a,b = strategy(x,y)
 

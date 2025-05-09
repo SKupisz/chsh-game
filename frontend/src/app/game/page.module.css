@@ -1,0 +1,21 @@
+.header {
+    font-size: 1.7rem !important;
+}
+
+@media screen and (min-width: 425px) {
+    .header{
+        font-size: 3rem !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .header{
+        font-size: 5rem !important;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .header{
+        font-size: 6rem !important;
+    }
+}
