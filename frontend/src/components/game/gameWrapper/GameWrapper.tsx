@@ -1,6 +1,6 @@
 'use client'
 
-import { Alert, Button, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Alert, Button, Divider, Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useState } from "react"
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import styles from './GameWrapper.module.css'
@@ -23,6 +23,8 @@ export const GameWrapper = () => {
     const [error, setError] = useState('');
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [userAnswer, setUserAnswer] = useState<UserAnswer>(-1);
+
+    const isTablet = useMediaQuery('(min-width: 768px)');
 
     const handleStartingTheGame = async() => {
         try {
@@ -85,11 +87,25 @@ export const GameWrapper = () => {
     return (<div className={styles.gameWrapper}>
         {
             phase === 'begin' ? (
-                <Button variant="contained" onClick={handleStartingTheGame}>
+                <Button 
+                    variant="contained" 
+                    onClick={handleStartingTheGame}
+                    sx={{
+                        padding: 3,
+                        paddingLeft: 10,
+                        paddingRight: 10
+                    }}
+                >
                     Start the game
                 </Button>
             ) : phase === 'answer' ? (<>
-                <Typography paddingTop={4} paddingBottom={10} variant="h3" align="center">
+                <Typography 
+                    paddingTop={4} 
+                    paddingBottom={10} 
+                    variant="h3" 
+                    align="center"
+                    fontSize={isTablet ? 38 : 28}
+                >
                     Your question is: {gameData?.x}
                 </Typography>
                 <Grid container spacing={4} sx={{
@@ -97,7 +113,7 @@ export const GameWrapper = () => {
                     alignItems: 'start',
                     width: '100%'
                 }}>
-                    <Grid size={6}>
+                    <Grid size={isTablet ? 6 : 12}>
                         <Stack spacing={2} width={'100%'}>
                             <Typography align="center" variant="h5">
                                 Classical strategy
@@ -123,7 +139,7 @@ export const GameWrapper = () => {
                             </Button>
                         </Stack>
                     </Grid>
-                    <Grid size={6}>
+                    <Grid size={isTablet ? 6 : 12}>
                         <Stack spacing={2} width={'100%'}>
                             <Typography align="center" variant="h5">
                                 Quantum strategy
@@ -142,10 +158,28 @@ export const GameWrapper = () => {
                 </Grid>
             </>) : (
                 <>
-                    <Alert icon={<FeedbackIcon />} severity={phase === 'victory' ? "success" : "error"}>
+                    <Alert 
+                        icon={<FeedbackIcon />} 
+                        severity={phase === 'victory' ? "success" : "error"}
+                        variant="filled"
+                        sx={{
+                            width: '40%',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                            marginBottom: '20px'
+                        }}
+                    >
                         {phase === "victory" ? "You've won!" : "You've lost!"}
                     </Alert>
-                    <Button variant="contained" onClick={resetGame}>
+                    <Button 
+                        variant="contained" 
+                        onClick={resetGame}
+                        sx={{
+                            padding: 3,
+                            paddingLeft: 10,
+                            paddingRight: 10
+                        }}
+                    >
                         Play again
                     </Button>
                 </>
